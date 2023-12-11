@@ -29,21 +29,27 @@ public class delRepeat {
                brands.add(b);
            }
        }
+//        String[] players=new String[]{"johnson","yuguai"};
         String[] players=new String[]{"johnson","yuguai","zh1016"};
        Set<Integer> indexs=new HashSet<Integer>();//已发牌标记并去重
         List<Brand> pubList=new ArrayList<>();//公共牌
+        int len=0;
         for (int i=0;i<5;i++){
             int index=0;
             do {
-                Brand flop = (Brand) getBrand(brands).get("brand");
-                 index = (int) getBrand(brands).get("index");
-                 if(!indexs.contains(index)){
+                Map m1=new HashMap();
+                m1=getBrand(brands);
+                Brand flop = (Brand) m1.get("brand");
+                 index = (int) m1.get("index");
+//                System.out.print(index+",");
+//                System.out.println(flop.getDecor()+flop.getPoint());
+                 len=indexs.size();
+                 if(!indexs.contains(index)){//至少做一次，不存在就插入
                      pubList.add(flop);//公共牌5张
                      indexs.add(index);
-                     System.out.println(index);
-
                  }
-            }while(!indexs.contains(index));
+//                System.out.println(indexs);
+            }while(len==indexs.size());//至少加一次，如果不包含就一直加
         }
         System.out.println("======");
        for (int i=0;i<players.length;i++){
@@ -53,23 +59,33 @@ public class delRepeat {
            int index1=0;
            int index2=0;
            do{
-                Brand b1=(Brand) getBrand(brands).get("brand");
-               index1 = (int) getBrand(brands).get("index");
+               Map m1=new HashMap();
+               m1=getBrand(brands);
+               Brand b1 = (Brand) m1.get("brand");
+               index1 = (int) m1.get("index");
+               len=indexs.size();
+//               System.out.print(index1+",");
+//               System.out.println(b1.getDecor()+b1.getPoint());
                if(!indexs.contains(index1)) {
                    pb.add(b1);
                    indexs.add(index1);
-                   System.out.println(index1);
                }
-           }while(!indexs.contains(index1));
+//               System.out.println(indexs);
+           }while(len==indexs.size());
             do{
-                Brand b2=(Brand) getBrand(brands).get("brand");
-                index2 = (int) getBrand(brands).get("index");
-                if(!indexs.contains(index2)) {
+                Map m1=new HashMap();
+                m1=getBrand(brands);
+                Brand b2 = (Brand) m1.get("brand");
+                index2 = (int) m1.get("index");
+                len=indexs.size();
+//                System.out.print(index2+",");
+//                System.out.println(b2.getDecor()+b2.getPoint());
+                if(!indexs.contains(index2)) {//至少做一次，不存在就插入
                     pb.add(b2);
                     indexs.add(index2);
-                    System.out.println(index2);
                 }
-            }while(!indexs.contains(index2));
+//                System.out.println(indexs);
+            }while(len==indexs.size());
            //开局每人两张牌
            for(Brand b :pubList ){
                pb.add(b);
